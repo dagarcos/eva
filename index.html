@@ -204,6 +204,7 @@
                 //saveAs(blob, document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt");
                 var saver = new FileSaver();
                 saver.setContents(dirName, fileName, this.txt);
+                saver.saveFileContent();
             };
         }
 

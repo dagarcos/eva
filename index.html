@@ -6,38 +6,6 @@ maximum-scale=1,minimum-scale=1, width=device-width" />
         <title>PhoneGap App</title>
  		<script src="vendor/jquery.min.js"></script>
         <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript">
-                $('#saveFile_btn').on('click', function() {
-                    saveFileContent();
-                });
-
-                function saveFileContent(){
-                    window.resolveLocalFileSystemURL(cordova.file.dataDirectory,
-                    	    function(dirEntry) {
-                    	        dir.getFile(documenty.getElementById('my_name').value, {
-                    	            create: true,
-                    	            exclusive: false
-                    	        }, function(f) {
-                    	        f.createWriter(function(writer) {
-                    	            writer.onwriteend = function(evt) {
-                    	                alert("File successfully created!");
-                    	            };
-                    	            writer.write(document.getElementById('my_text').value);
-                    	        },
-                    	        function(evt, where) {
-                    	            console.log("Error writing file "+ where + " :");
-                    	            console.log(JSON.stringify(evt));
-                    	        }
-                    	    },
-                    	    function(evt, where) {
-                    	        console.log("Error resolving data folder "+ where + " :");
-                    	        console.log(JSON.stringify(evt));
-                    	    }
-                    	);
-                }
-
-
-            </script>
     </head>
     <body>
     		<input type="text" placeholder="file name" id="my_name" />
@@ -47,4 +15,36 @@ maximum-scale=1,minimum-scale=1, width=device-width" />
         	<div id="message"></div>
         	<div id="contents"></div>
     </body>
+    <script>
+    $('#saveFile_btn').on('click', function() {
+        saveFileContent();
+    });
+    
+    function saveFileContent(){
+        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir){dir.getFile(document.getElementById('my_name').value, { create: true, exclusive: false }, fileEntry)}, fail);
+    }
+    
+    function fail(evt, where){
+        console.log("Error resolving "+ where + " :");
+        console.log(JSON.stringify(evt));
+    }
+    
+    function success(e){
+    	console.log('success '+e);
+    }
+    
+    function writeFile(writer){
+    	console.log('writer');
+        writer.onwriteend = function(evt) {
+     	   console.log('created');
+            alert("File successfully created!");
+        };
+        writer.write(document.getElementById('my_text').value);
+    }
+    
+    function fileEntry(f){
+        f.createWriter(writeFile, fail);
+    }
+    
+    </script>
 </html>

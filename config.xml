@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+  id          = "didacticaApp"
+  versionCode = "10"
+  version     = "1.0.0" >
+  
+<platform name="android" />
+
+  <name>Aplicación para cosas</name>
+
+  <description>
+    Aplicación  para cosas.
+  </description>
+
+	  <author>
+	    Eva Arbona, Daniel Garcia
+	  </author>
+
+  	<!-- We'll include the Barcode plugin as an example -->
+	<plugin name="cordova-plugin-file" spec="4.3.3"/>
+	<plugin name="cordova-plugin-file-transfer" spec="1.6.3"/>
+</widget>

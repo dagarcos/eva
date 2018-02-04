@@ -12,22 +12,35 @@ maximum-scale=1,minimum-scale=1, width=device-width" />
                 });
 
                 function saveFileContent(){
-                	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
-                		 
-                	    console.log('file system open: ' + fs.name);
-                	    fs.externalApplicationStorageDirectory.getFile("newPersistentFile.txt", { create: true, exclusive: false }, function (fileEntry) {
-                	 
-                	        console.log("fileEntry is file?" + fileEntry.isFile.toString());
-                	        writeFile(fileEntry, null);
-                	 
-                	    }, fail);
-                	 
-                	}, fail);
+                    window.resolveLocalFileSystemURL(cordova.file.dataDirectory,
+                    	    function(dirEntry) {
+                    	        dir.getFile(documenty.getElementById('my_name').value, {
+                    	            create: true,
+                    	            exclusive: false
+                    	        }, function(f) {
+                    	        f.createWriter(function(writer) {
+                    	            writer.onwriteend = function(evt) {
+                    	                alert("File successfully created!");
+                    	            };
+                    	            writer.write(document.getElementById('my_text').value);
+                    	        },
+                    	        function(evt, where) {
+                    	            console.log("Error writing file "+ where + " :");
+                    	            console.log(JSON.stringify(evt));
+                    	        }
+                    	    },
+                    	    function(evt, where) {
+                    	        console.log("Error resolving data folder "+ where + " :");
+                    	        console.log(JSON.stringify(evt));
+                    	    }
+                    	);
                 }
+
 
             </script>
     </head>
     <body>
+    		<input type="text" placeholder="file name" id="my_name" />
         	<input type="text" id="my_text" />
         	<input type="button" id="saveFile_btn"
                value="Save" />

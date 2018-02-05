@@ -165,16 +165,19 @@
         		this.content = content;
         	}
         	this.saveFileContent = function(){
-                window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(this.dirName, {create: true}, this.createFile)}, this.fail);
+        		var self = this;
+                window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(self.dirName, {create: true}, self.createFile)}, self.fail);
             };	
         	this.createFile = function(dir){
-            	dir.getFile(this.fileName, { create: true, exclusive: false }, function(f){f.createWriter(this.writeFile, this.fail);})
+        		var self = this;
+            	dir.getFile(self.fileName, { create: true, exclusive: false }, function(f){f.createWriter(self.writeFile, self.fail);})
             };           
             this.writeFile = function(writer){
+            	var self = this;
                 writer.onwriteend = function(evt) {
              	   console.log('file created');
                 };
-                writer.write(this.content);
+                writer.write(self.content);
             };
             this.fail = function(evt, where){
                 console.log("Error resolving "+ where + " :");

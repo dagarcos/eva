@@ -152,7 +152,7 @@
         	$(".navbar-custom").toggle();
         }
         
-        
+        /*
         function FileSaver(){
         	
         	this.dirName = "";
@@ -184,6 +184,31 @@
                 console.log(JSON.stringify(evt));
             }
         }
+        */
+        
+        function saveFileContent(){
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, createFile)}, fail);
+        }
+        
+        function fail(evt, where){
+            console.log("Error resolving "+ where + " :");
+            console.log(JSON.stringify(evt));
+        }
+        
+        function success(e){
+        	console.log('success '+e);
+        }
+        
+        function createFile(dir){
+        	dir.getFile(__fileName, { create: true, exclusive: false }, function(f){f.createWriter(writeFile, fail);})
+        }
+        
+        function writeFile(writer){
+            writer.onwriteend = function(evt) {
+          	   console.log('file created');
+             };
+             writer.write(__fileContent);
+        }
         
         function File_(){
             this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
@@ -202,12 +227,11 @@
             this.download = function(){
                 //var blob = new Blob([this.txt], {type: "text/plain;charset=utf-8"});
                 var d = new Date();
-                var fileName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt";
-                var dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate();
+                __fileName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt";
+                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate();
                 //saveAs(blob, document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt");
-                var saver = new FileSaver();
-                saver.setContents(dirName, fileName, this.txt);
-                saver.saveFileContent();
+                __fileContent = this.txt;
+                saveFileContent();
             };
         }
 
@@ -220,6 +244,9 @@
         var unidad_seleccionada = "none";
         var send_draw = false;
         var file = new File_();
+        var __dirName = "";
+        var __fileName = "";
+        var __fileContent = "";
         
         init();
         

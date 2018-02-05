@@ -152,39 +152,7 @@
         	$(".navbar-custom").toggle();
         }
         
-        /*
-        function FileSaver(){
-        	
-        	this.dirName = "";
-        	this.fileName = "";
-        	this.content = "";
-        	
-        	this.setContents = function(dirName, fileName, content){
-        		this.dirName = dirName;
-        		this.fileName = fileName;
-        		this.content = content;
-        	}
-        	this.saveFileContent = function(){
-        		var self = this;
-                window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(self.dirName, {create: true}, self.createFile)}, self.fail);
-            };	
-        	this.createFile = function(dir){
-        		var self = this;
-            	dir.getFile(self.fileName, { create: true, exclusive: false }, function(f){f.createWriter(self.writeFile, self.fail);})
-            };           
-            this.writeFile = function(writer){
-            	var self = this;
-                writer.onwriteend = function(evt) {
-             	   console.log('file created');
-                };
-                writer.write(self.content);
-            };
-            this.fail = function(evt, where){
-                console.log("Error resolving "+ where + " :");
-                console.log(JSON.stringify(evt));
-            }
-        }
-        */
+		/* SAVE FILE IN ANDROID FILE SYSTEM OPERATIONS */
         
         function saveFileContent(){
         	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, createFile)}, fail);
@@ -207,8 +175,10 @@
             writer.onwriteend = function(evt) {
           	   console.log('file created');
              };
-             writer.write(__fileContent);
+             writer.write(__fileContent, {type: __fileType});
         }
+        
+        /*************   OBJECT TO STORE RESULTS   *************/
         
         function File_(){
             this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
@@ -231,10 +201,12 @@
                 __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate();
                 //saveAs(blob, document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt");
                 __fileContent = this.txt;
+                __fileType = 'text/plain';
                 saveFileContent();
             };
         }
 
+        /*************   VARIABLES GLOBALES   *************/
         var json_data;
         var actual_tab = 0;
 		var activity_index = -1;
@@ -247,6 +219,7 @@
         var __dirName = "";
         var __fileName = "";
         var __fileContent = "";
+        var __fileType = "";
         
         init();
         
@@ -406,7 +379,8 @@
         	
         	if(actual_tab > 0){
         		var d = new Date();
-        		downloadURI(selected_stage.toDataURL(), document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+'_'+getApartado()+'.png');
+        		//downloadURI(selected_stage.toDataURL(), document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+'_'+getApartado()+'.png');
+        		downloadImage(document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+'_'+getApartado()+'.png', selected_stage.toDataURL());
         		file.write('Siguiente Apartado', '', '', '', '');
         	}
         	else{
@@ -830,6 +804,14 @@
 	            link.click();
 	            document.body.removeChild(link);
 	            delete link;
+	        }downloadImagedownloadImage
+	        
+	        function downloadImage(fileName, dirName, img){
+	        	__fileName = fileName;
+	        	__dirName = dirName;
+	        	__fileContent = img;
+	        	__fileType = 'image/png';
+	        	saveFileContent();
 	        }
             
                        

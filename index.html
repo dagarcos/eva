@@ -93,7 +93,7 @@
 		</div>
 		
 		<div class="calc_container" id="calculator">
-			<form name="sci-calc">
+			<form name="sci-calc" id="sci-calc">
 				 <table class="calculator">
 				   <tr>
 				     <td colspan="5"><input id="display" name="display" value="0" size="28" maxlength="25"></td>
@@ -385,26 +385,33 @@
         function next_tabs(){
         	
         	send_draw = false;
+        	actual_tab = incrementRange();
         	
         	if(actual_tab > 0){
         		var d = new Date();
-        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());
-        		file.write('Siguiente Apartado', '', '', '', '');
+        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
         	}
-        	else{
-        		file.write('Siguiente Apartado', '', '', '', '');
-        	}
+
+        	file.write('Siguiente Apartado', '', '', '', '');
         	
-        	actual_tab = incrementRange();
             init_canvas();
         	$(".tab-custom").hide();
         	$("#tab-custom-"+actual_tab).show();
         	$("#btn-prev").show();
         	
         	if(actual_tab == max_tab){
-        		$("#btn-end").show();
-        		$("#btn-next").hide();
+            	if(activity_index == problemas.length-1){
+            		$("#btn-end").html('Finalizar');
+            		$("#btn-end").attr('onclick', 'show_end();');
+            		$("#btn-end").show();
+            	}
+            	else{
+            		$("#btn-end").show();
+            		$("#btn-next").hide();
+            	}
         	}
+        	
+
         }
         
         function next_activity(){
@@ -537,7 +544,12 @@
  	 	 		var row2 = document.createElement('div');
  	 	 		row2.setAttribute('class', 'row');
  	 	 		row2.setAttribute('style', 'padding-right:30px;');
- 	 	 		row2.innerHTML = '<div class="col-sm-3"><label style="margin-top:5px;">Resultado:</label></div><div class="col-sm-5"><input type="text" id="solVal_'+sol_count+'" class="form-control" /></div><div class="col-sm-2"><button class="btn btn-success" onclick="validate(this, '+sol_count+');">Comprobar</button></div><br><br>';
+ 	 	 		if(json_data.soluciones[sol_char] != ""){
+ 	 	 	 		row2.innerHTML = '<div class="col-sm-3"><label style="margin-top:5px;">Resultado:</label></div><div class="col-sm-5"><input type="text" id="solVal_'+sol_count+'" class="form-control" /></div><div class="col-sm-2"><button class="btn btn-success" onclick="validate(this, '+sol_count+');">Comprobar</button></div><br><br>';
+ 	 	 		}
+ 	 	 		else{
+ 	 	 			row2.innerHTML = '';
+ 	 	 		}
 
  	 	 		div_cell_3.appendChild(row2);
  	 	 		div_cell_3.appendChild(text_area);
@@ -606,6 +618,7 @@
         
         function toggle_calculator(){
         	if(calc_visible){
+        		document.getElementById('display').value = 0;
         		$("#calculator").hide();
         		calc_visible = false;
         	}
@@ -632,6 +645,9 @@
         	
         }
         
+        function show_end(){
+        	$('#activity-1').html('<h1>¡Buen trabajo!</h1>');
+        }
         
         </script>
         

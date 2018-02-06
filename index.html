@@ -159,7 +159,37 @@
         }		
 		
         function saveFileContent(){
-        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, createFile)}, fail);
+        	
+        	var _dirName = __dirName;
+        	var _fileName = __fileName;
+        	var _fileContent = __fileContent;
+        	var _fileType = __fileType;
+        	
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(_dirName, {create: true},         function createFile(dir){
+            	dir.getFile(_fileName, { create: true, exclusive: false }, function(f){f.createWriter(function writeFile(writer){
+                    writer.onwriteend = function(evt) {
+                   	   console.log('file created');
+                      };
+                      writer.write(_fileContent, {type: _fileType});
+                 }, fail);})
+            })}, fail);
+        }
+        
+        function saveImageContent(){
+        	
+        	var _dirName = __dirName;
+        	var _fileName = __fileName;
+        	var _fileContent = __fileContent;
+        	var _fileType = __fileType;
+        	
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(_dirName, {create: true},         function createFile(dir){
+            	dir.getFile(_fileName, { create: true, exclusive: false }, function(f){f.createWriter(function writeFile(writer){
+                    writer.onwriteend = function(evt) {
+                   	   console.log('file created');
+                      };
+                      writer.write(_fileContent, {type: _fileType});
+                 }, fail);})
+            })}, fail);
         }
         
         function fail(evt, where){
@@ -167,20 +197,9 @@
             console.log(JSON.stringify(evt));
         }
         
-        function success(e){
-        	console.log('success '+e);
-        }
+
         
-        function createFile(dir){
-        	dir.getFile(__fileName, { create: true, exclusive: false }, function(f){f.createWriter(writeFile, fail);})
-        }
         
-        function writeFile(writer){
-            writer.onwriteend = function(evt) {
-          	   console.log('file created');
-             };
-             writer.write(__fileContent, {type: __fileType});
-        }
         
         /*************   OBJECT TO STORE RESULTS   *************/
         
@@ -869,7 +888,7 @@
 	        	__fileContent = b64toBlob(blockURL[1].split(",")[1], __fileType);
 	        	__fileName = fileName;
 	        	__dirName = dirName;
-	        	saveFileContent();
+	        	saveImageContent();
 	        	__block = false;
 	        }
 	        

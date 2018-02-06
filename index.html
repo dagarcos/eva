@@ -385,13 +385,13 @@
         function next_tabs(){
         	
         	send_draw = false;
-        	actual_tab = incrementRange();
         	
         	if(actual_tab > 0){
         		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
         	}
 
+        	actual_tab = incrementRange();
         	file.write('Siguiente Apartado', '', '', '', '');
         	
             init_canvas();

@@ -195,14 +195,13 @@
             	this.txt += '"'+clave+'";"'+problemas[activity_index].name+'";"'+getApartado()+'";"'+texto+'";"'+resultado+'";"'+correccion+'";"'+operacion+'";"'+fecha+'";"'+timestamp+'"\n';
             };
             this.download = function(){
-                //var blob = new Blob([this.txt], {type: "text/plain;charset=utf-8"});
                 var d = new Date();
-                __fileName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt";
-                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate();
-                //saveAs(blob, document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+".txt");
+                __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
+                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate();
                 __fileContent = this.txt;
                 __fileType = 'text/plain';
                 saveFileContent();
+                this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
             };
         }
 
@@ -379,8 +378,7 @@
         	
         	if(actual_tab > 0){
         		var d = new Date();
-        		//downloadURI(selected_stage.toDataURL(), document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+'_'+getApartado()+'.png');
-        		downloadImage(document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+d.getFullYear()+"."+d.getMonth()+1+"."+d.getDate()+"_"+d.getHours()+"."+d.getMinutes()+"."+d.getSeconds()+'_'+getApartado()+'.png', selected_stage.toDataURL());
+        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());
         		file.write('Siguiente Apartado', '', '', '', '');
         	}
         	else{

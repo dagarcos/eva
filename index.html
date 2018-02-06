@@ -389,6 +389,7 @@
         	if(actual_tab > 0){
         		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
+        		file.download();
         	}
 
         	actual_tab = incrementRange();
@@ -419,6 +420,7 @@
         	debug('next');
         	
         	if(activity_index != -1){
+        		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());    
         		file.download();
         	}

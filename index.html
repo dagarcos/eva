@@ -154,16 +154,11 @@
         
 		/* SAVE FILE IN ANDROID FILE SYSTEM OPERATIONS */
         
-        function createDir(){
-        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__imageDirName, {create: true}, function(d){console.log('dir created');})}, fail);
+        function createDir(__dirName){
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, function(d){console.log('dir created');})}, fail);
         }		
 		
-        function saveFileContent(){
-        	
-        	var _dirName = __dirName;
-        	var _fileName = __fileName;
-        	var _fileContent = __fileContent;
-        	var _fileType = __fileType;
+        function saveFileContent(_dirName, _fileName, _fileContent, _fileType){
         	
         	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(_dirName, {create: true},         function createFile(dir){
             	dir.getFile(_fileName, { create: true, exclusive: false }, function(f){f.createWriter(function writeFile(writer){
@@ -175,12 +170,7 @@
             })}, fail);
         }
         
-        function saveImageContent(){
-        	
-        	var _dirName = __dirName;
-        	var _fileName = __fileName;
-        	var _fileContent = __fileContent;
-        	var _fileType = __fileType;
+        function saveImageContent(_dirName, _fileName, _fileContent, _fileType){
         	
         	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(_dirName, {create: true},         function createFile(dir){
             	dir.getFile(_fileName, { create: true, exclusive: false }, function(f){f.createWriter(function writeFile(writer){
@@ -223,11 +213,11 @@
             	__block = true;
             	
                 var d = new Date();
-                __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
-                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
-                __fileContent = this.txt;
-                __fileType = 'text/plain';
-                saveFileContent();
+                var __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
+                var __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
+                var __fileContent = this.txt;
+                var __fileType = 'text/plain';
+                saveFileContent(__dirName, __fileName, __fileContent, __fileType);
                 if(!increment){
 	                this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
 	            	file.writeHeaders('Centro', document.getElementById('place').value);
@@ -258,11 +248,6 @@
         var unidad_seleccionada = "none";
         var send_draw = false;
         var file = new File_();
-        var __dirName = "";
-        var __fileName = "";
-        var __fileContent = "";
-        var __fileType = "";
-        var __imageDirName = "";
         var __block = false;
         
         init();
@@ -369,8 +354,7 @@
         	document.getElementById('tag_session').innerHTML += document.getElementById('session').value;
         	document.getElementById('tag_date').innerHTML += date;
         	
-        	__imageDirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
-        	createDir();
+        	createDir(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate(););
         	
         	$("#config").hide();
         	$("#btn-config").hide();
@@ -884,11 +868,11 @@
             	checkBlock();
             	__block = true;
 	        	var blockURL = imgURL.split(';');
-	        	__fileType = blockURL[0].split(":")[1];	        	
-	        	__fileContent = b64toBlob(blockURL[1].split(",")[1], __fileType);
-	        	__fileName = fileName;
-	        	__dirName = dirName;
-	        	saveImageContent();
+	        	var __fileType = blockURL[0].split(":")[1];	        	
+	        	var __fileContent = b64toBlob(blockURL[1].split(",")[1], __fileType);
+	        	var __fileName = fileName;
+	        	var __dirName = dirName;
+	        	saveImageContent(__dirName, __fileName, __fileContent, __fileType);
 	        	__block = false;
 	        }
 	        

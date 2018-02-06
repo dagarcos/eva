@@ -198,19 +198,17 @@
             	var timestamp = Math.floor(Date.now()/1000);
             	this.txt += '"'+clave+'";"'+problemas[activity_index].name+'";"'+getApartado()+'";"'+texto+'";"'+resultado+'";"'+correccion+'";"'+operacion+'";"'+fecha+'";"'+timestamp+'"\n';
             };
-            this.download = function(increment){
+            this.download = function(){
                 var d = new Date();
                 __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
                 __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
                 __fileContent = this.txt;
                 __fileType = 'text/plain';
                 saveFileContent();
-                if(!increment){
-	                this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
-	            	file.writeHeaders('Centro', document.getElementById('place').value);
-	            	file.writeHeaders('Sesion', document.getElementById('session').value);
-	            	file.writeHeaders('Nombres', document.getElementById('names').value);
-                }
+                this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
+            	file.writeHeaders('Centro', document.getElementById('place').value);
+            	file.writeHeaders('Sesion', document.getElementById('session').value);
+            	file.writeHeaders('Nombres', document.getElementById('names').value);
             };
         }
 
@@ -391,7 +389,6 @@
         	if(actual_tab > 0){
         		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
-        		file.download(true);
         	}
 
         	actual_tab = incrementRange();
@@ -422,9 +419,8 @@
         	debug('next');
         	
         	if(activity_index != -1){
-        		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());    
-        		file.download(false);
+        		file.download();
         	}
         	
         	activity_index = activity_index + 1;
@@ -653,7 +649,7 @@
         }
         
         function show_end(){
-        	file.download(false);
+        	file.download();
     		$("#btn-end").hide();
     		$("#btn-next").hide();
     		$("#btn-prev").hide();

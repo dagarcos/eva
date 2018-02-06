@@ -155,7 +155,7 @@
 		/* SAVE FILE IN ANDROID FILE SYSTEM OPERATIONS */
         
         function createDir(){
-        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__imageDirName, {create: true}, function(d){console.log('dir created'); return 0;})}, fail);
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__imageDirName, {create: true}, function(d){console.log('dir created');})}, fail);
         }		
 		
         function saveFileContent(){
@@ -220,10 +220,11 @@
             };
         }
         
-        async function checkBlock(){
+        function checkBlock(){
         	if(__block){
         		while(__block){
-        			await sleep(200);
+        			sleep(200);
+        			console.log('sleep');
         		}
         	}
         }

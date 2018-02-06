@@ -188,20 +188,20 @@
             this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
             this.writeHeaders = function(clave, texto){
             	var d = new Date();
-            	var fecha = d.getDate()+"/"+parseInt(d.getMonth())+1+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+            	var fecha = d.getDate()+"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
             	var timestamp = Math.floor(Date.now()/1000);
             	this.txt += '"'+clave+'";"";"";"'+texto+'";"";"";"";"'+fecha+'";"'+timestamp+'"\n';
             };
             this.write = function(clave, texto, resultado, correccion, operacion){
             	var d = new Date();
-            	var fecha = d.getDate()+"/"+parseInt(d.getMonth())+1+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+            	var fecha = d.getDate()+"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
             	var timestamp = Math.floor(Date.now()/1000);
             	this.txt += '"'+clave+'";"'+problemas[activity_index].name+'";"'+getApartado()+'";"'+texto+'";"'+resultado+'";"'+correccion+'";"'+operacion+'";"'+fecha+'";"'+timestamp+'"\n';
             };
             this.download = function(){
                 var d = new Date();
                 __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
-                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate();
+                __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
                 __fileContent = this.txt;
                 __fileType = 'text/plain';
                 saveFileContent();
@@ -324,14 +324,14 @@
         	debug('set_config');
         	
         	var d = new Date();
-        	var date = d.getDate() +"/"+ parseInt(d.getMonth())+1+"/"+ d.getFullYear();
+        	var date = d.getDate() +"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+ d.getFullYear();
         	
         	document.getElementById('tag_names').innerHTML += document.getElementById('names').value;
         	document.getElementById('tag_place').innerHTML += document.getElementById('place').value;
         	document.getElementById('tag_session').innerHTML += document.getElementById('session').value;
         	document.getElementById('tag_date').innerHTML += date;
         	
-        	__dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate();
+        	__dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
         	createDir();
         	
         	$("#config").hide();
@@ -388,7 +388,7 @@
         	
         	if(actual_tab > 0){
         		var d = new Date();
-        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(d.getMonth())+1+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
+        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());       		
         	}
 
         	actual_tab = incrementRange();
@@ -404,6 +404,7 @@
             		$("#btn-end").html('Finalizar');
             		$("#btn-end").attr('onclick', 'show_end();');
             		$("#btn-end").show();
+            		$("#btn-next").hide();
             	}
             	else{
             		$("#btn-end").show();
@@ -646,6 +647,7 @@
         }
         
         function show_end(){
+        	file.download();
         	$('#activity-1').html('<h1>¡Buen trabajo!</h1>');
         }
         

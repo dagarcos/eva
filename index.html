@@ -155,7 +155,7 @@
 		/* SAVE FILE IN ANDROID FILE SYSTEM OPERATIONS */
         
         function createDir(){
-        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, function(d){return 0;})}, fail);
+        	window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(fs){fs.getDirectory(__dirName, {create: true}, function(d){console.log('dir created'); return 0;})}, fail);
         }		
 		
         function saveFileContent(){
@@ -391,7 +391,7 @@
         	if(actual_tab > 0){
         		var d = new Date();
         		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());   
-        		file.download(true);
+        		//file.download(false);
         	}
 
         	actual_tab = incrementRange();

@@ -202,6 +202,9 @@
                 __fileType = 'text/plain';
                 saveFileContent();
                 this.txt = '"clave";"actividad";"apartado";"texto";"resultado";"correccion";"operacion";"fecha";"timestamp" \n';
+            	file.writeHeaders('Centro', document.getElementById('place').value);
+            	file.writeHeaders('Sesion', document.getElementById('session').value);
+            	file.writeHeaders('Nombres', document.getElementById('names').value);
             };
         }
 
@@ -399,7 +402,11 @@
         
         function next_activity(){
         	debug('next');
-        	file.download();
+        	
+        	if(activity_index != -1){
+        		file.download();
+        	}
+        	
         	activity_index = activity_index + 1;
         	file.write('Siguiente Actividad', '', '', '', '');
         		

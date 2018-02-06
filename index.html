@@ -199,6 +199,10 @@
             	this.txt += '"'+clave+'";"'+problemas[activity_index].name+'";"'+getApartado()+'";"'+texto+'";"'+resultado+'";"'+correccion+'";"'+operacion+'";"'+fecha+'";"'+timestamp+'"\n';
             };
             this.download = function(increment){
+            	
+            	checkBlock();
+            	__block = true;
+            	
                 var d = new Date();
                 __fileName = document.getElementById('prefix').value+"-"+problemas[activity_index].name+".txt";
                 __dirName = document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate();
@@ -211,7 +215,17 @@
 	            	file.writeHeaders('Sesion', document.getElementById('session').value);
 	            	file.writeHeaders('Nombres', document.getElementById('names').value);
                 }
+                
+                __block = false;
             };
+        }
+        
+        async function checkBlock(){
+        	if(__block){
+        		while(__block){
+        			await sleep(200);
+        		}
+        	}
         }
 
         /*************   VARIABLES GLOBALES   *************/
@@ -229,6 +243,7 @@
         var __fileContent = "";
         var __fileType = "";
         var __imageDirName = "";
+        var __block = false;
         
         init();
         
@@ -846,13 +861,15 @@
 	        }
 	        
 	        function downloadImage(dirName, fileName, imgURL){
-	        	
+            	checkBlock();
+            	__block = true;
 	        	var blockURL = imgURL.split(';');
 	        	__fileType = blockURL[0].split(":")[1];	        	
 	        	__fileContent = b64toBlob(blockURL[1].split(",")[1], __fileType);
 	        	__fileName = fileName;
 	        	__dirName = dirName;
 	        	saveFileContent();
+	        	__block = false;
 	        }
 	        
 	        function b64toBlob(b64Data, contentType, sliceSize) {

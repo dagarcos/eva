@@ -365,7 +365,7 @@
         	$(".tab-custom").hide();
         	$("#tab-custom-0").show();
         	$("#btn-next").show();
-        	actual_tab = 0;0
+        	actual_tab = 0;
         }
         
         function prev_tabs(){
@@ -419,10 +419,12 @@
         	debug('next');
         	
         	if(activity_index != -1){
+        		downloadImage(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate()+'/'+document.getElementById('prefix').value+'-images', document.getElementById('prefix').value+"-"+problemas[activity_index].name+'-'+getApartado()+'.png', selected_stage.toDataURL());    
         		file.download();
         	}
         	
         	activity_index = activity_index + 1;
+        	actual_tab = 0;
         	file.write('Siguiente Actividad', '', '', '', '');
         		
             $.getScript("problemas/"+problemas[activity_index].name+"/"+problemas[activity_index].name+".js", function(data){
@@ -614,7 +616,7 @@
         }
         
         function saveTextField(d){
-        	file.write('Explicacion', this.value, '', '', '');
+        	file.write('Explicacion', d.value, '', '', '');
         }
         
         function toggle_calculator(){

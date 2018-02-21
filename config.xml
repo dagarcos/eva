@@ -9,13 +9,26 @@
 
 	<name>GeoPattern</name>
 
+<<<<<<< HEAD
   <description>Introducción al algebra mediante problemas de patrones geométricos</description>
+=======
+  <description>
+    Introducción al algebra mediante problemas de patrones geométricos
+  </description>
+>>>>>>> branch 'android_app' of https://github.com/dagarcos/eva.git
 
 	  <author>
 	    Eva Arbona, Daniel Garcia
 	  </author>
 
+<<<<<<< HEAD
   	<!-- We'll include-->
 	<plugin name="cordova-plugin-file" spec="4.3.3"></plugin>
 	<plugin name="cordova-plugin-file-transfer" spec="1.6.3"></plugin>
 </widget>
+=======
+  	<!-- We'll include the Barcode plugin as an example -->
+	<plugin name="cordova-plugin-file" spec="4.3.3"/>
+	<plugin name="cordova-plugin-file-transfer" spec="1.6.3"/>
+</widget>
+>>>>>>> branch 'android_app' of https://github.com/dagarcos/eva.git

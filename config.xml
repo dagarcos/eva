@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns   = "http://www.w3.org/ns/widgets"
   id          = "GeoPattern"
-  versionCode = "10"
-  version     = "1.0.7" >
+  versionCode = "108"
+  version     = "1.0.8" >
   
 <platform name="android" >
 	<icon src="geoPattern_logo.png" platform="ios" width="200" height="200"></icon></platform>

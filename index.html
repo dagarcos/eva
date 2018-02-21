@@ -18,10 +18,10 @@
 		<nav class="navbar navbar-inverse bg-inverse">
  		<ul class="nav navbar-nav nav-data-custom">
                 <li class="dropdown-header" id="tag_names"><strong>Nombres: </strong></li>
-                <li class="dropdown-header" id="tag_place"><strong>Centro: </strong></li>
+                <!-- <li class="dropdown-header" id="tag_place"><strong>Centro: </strong></li>  -->
                 <li class="dropdown-header" id="tag_session"><strong>Sesión: </strong></li>
-                <li class="dropdown-header" id="tag_date"><strong>Fecha: </strong></li>
-                <li class="dropdown-header" id="tag_date" style="visibility: hidden;"><input id="debug" type="text" value="" style="color:black;"></li>
+                <!-- <li class="dropdown-header" id="tag_date"><strong>Fecha: </strong></li>  -->
+                <!-- <li class="dropdown-header" id="tag_date" style="visibility: hidden;"><input id="debug" type="text" value="" style="color:black;"></li>  -->
           </ul>
             <span class="pull-right pointer" onclick="toggle_menu();" style="margin-top:5px; margin-right:20px;"><img src="img/toggle.png" width="40px"/></span>
             <span class="pull-right pointer" onclick="toggle_calculator();" style="margin-top:5px; margin-right:20px;"><img class="calculadora" src="img/calculator.png" width="40px"/></span>
@@ -30,15 +30,16 @@
 			<div class="col-sm-8 left-cell">
 				<img id="patron" src="" style="width:100%;">
 			</div>
-			<div class="col-sm-4 right-cell">
-				<div class="col-sm-6">
-					<div class="row">
-						<div class="col-sm-6 unidad-contenedor pointer" onclick="select_unidad('img_unidad_1');" id="unidad_1"><img id="img_unidad_1" class="unidad" src="" style="heigth:100%;"></div>
-						<div class="col-sm-6 unidad-contenedor pointer" onclick="select_unidad('img_unidad_2');" id="unidad_2"><img id="img_unidad_2" class="unidad" src="" style="heigth:100%;"></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6 unidad-contenedor pointer" onclick="select_unidad('img_unidad_3');" id="unidad_3"><img id="img_unidad_3" class="unidad" src="" style="heigth:100%;"></div>
-						<div class="col-sm-6 unidad-contenedor pointer" onclick="select_unidad('img_unidad_4');" id="unidad_4"><img id="img_unidad_4" class="unidad" src="" style="heigth:100%;"></div>
+			<div class="col-sm-1" style="min-height: 100px; border-right: 2px solid black;">
+
+			</div>
+			<div class="col-sm-5">
+				<div class="row" style="margin-top: 25px; margin-left: 10px;">
+					<div style="display: table; margin: 0 auto;">
+						<div class="col-sm-3 unidad-contenedor pointer" style="padding-left:20px;" onclick="select_unidad('img_unidad_1');" id="unidad_1"></div>
+						<div class="col-sm-3 unidad-contenedor pointer" style="padding-left:20px;" onclick="select_unidad('img_unidad_2');" id="unidad_2"></div>
+						<div class="col-sm-3 unidad-contenedor pointer" style="padding-left:20px;" onclick="select_unidad('img_unidad_3');" id="unidad_3"></div>
+						<div class="col-sm-3 unidad-contenedor pointer" style="padding-left:20px;" onclick="select_unidad('img_unidad_4');" id="unidad_4"></div>
 					</div>
 				</div>
 			</div>
@@ -350,9 +351,9 @@
         	var date = d.getDate() +"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+ d.getFullYear();
         	
         	document.getElementById('tag_names').innerHTML += document.getElementById('names').value;
-        	document.getElementById('tag_place').innerHTML += document.getElementById('place').value;
+        	//document.getElementById('tag_place').innerHTML += document.getElementById('place').value;
         	document.getElementById('tag_session').innerHTML += document.getElementById('session').value;
-        	document.getElementById('tag_date').innerHTML += date;
+        	//document.getElementById('tag_date').innerHTML += date;
         	
         	createDir(document.getElementById('prefix').value+"-"+d.getFullYear()+"."+parseInt(parseInt(d.getMonth())+parseInt(1))+"."+d.getDate());
         	
@@ -462,6 +463,10 @@
         	document.getElementById('debug').value += d+" | ";
         }
         
+        function imgError(id){
+       		document.getElementById(id).remove();
+        }
+        
  		function change_activity(index){ 
  			
  			debug("change_act");
@@ -473,29 +478,45 @@
  			document.getElementById('unidad_3').innerHTML = "";
  			document.getElementById('unidad_4').innerHTML = "";
  			
- 			var u1 = document.createElement("img");
- 			u1.src = json_data.ruta_unidades[0];
- 			u1.setAttribute('class', 'unidad');
- 			u1.setAttribute('id', 'img_unidad_1');
- 			document.getElementById('unidad_1').appendChild(u1);
+ 			if(json_data.ruta_unidades[1] !== undefined){
+	 			var u1 = document.createElement("img");
+	 			u1.src = json_data.ruta_unidades[1];
+	 			u1.setAttribute('class', 'unidad');
+	 			u1.setAttribute('id', 'img_unidad_1');
+	 			u1.setAttribute('style', 'width:50px;');
+	 			u1.setAttribute('onerror', "imgError('img_unidad_1')");
+	 			document.getElementById('unidad_1').appendChild(u1);
+ 			}
  			
- 			var u2 = document.createElement("img");
- 			u2.src = json_data.ruta_unidades[1];
- 			u2.setAttribute('class', 'unidad');
- 			u2.setAttribute('id', 'img_unidad_2');
- 			document.getElementById('unidad_2').appendChild(u2);
+ 			if(json_data.ruta_unidades[2] !== undefined){
+	 			var u2 = document.createElement("img");
+	 			u2.src = json_data.ruta_unidades[2];
+	 			u2.setAttribute('class', 'unidad');
+	 			u2.setAttribute('id', 'img_unidad_2');
+	 			u2.setAttribute('style', 'width:50px;');
+	 			u2.setAttribute('onerror', "imgError('img_unidad_2')");
+	 			document.getElementById('unidad_2').appendChild(u2);
+ 			}
  			
- 			var u3 = document.createElement("img");
- 			u3.src = json_data.ruta_unidades[2];
- 			u3.setAttribute('class', 'unidad');
- 			u3.setAttribute('id', 'img_unidad_3');
- 			document.getElementById('unidad_3').appendChild(u3);
+ 			if(json_data.ruta_unidades[3] !== undefined){
+	 			var u3 = document.createElement("img");
+	 			u3.src = json_data.ruta_unidades[3];
+	 			u3.setAttribute('class', 'unidad');
+	 			u3.setAttribute('id', 'img_unidad_3');
+	 			u3.setAttribute('style', 'width:50px;');
+	 			u3.setAttribute('onerror', "imgError('img_unidad_3')");
+	 			document.getElementById('unidad_3').appendChild(u3);
+ 			}
  			
- 			var u4 = document.createElement("img");
- 			u4.src = json_data.ruta_unidades[3];
- 			u4.setAttribute('class', 'unidad');
- 			u4.setAttribute('id', 'img_unidad_4');
- 			document.getElementById('unidad_4').appendChild(u4);
+ 			if(json_data.ruta_unidades[4] !== undefined){
+	 			var u4 = document.createElement("img");
+	 			u4.src = json_data.ruta_unidades[4];
+	 			u4.setAttribute('class', 'unidad');
+	 			u4.setAttribute('id', 'img_unidad_4');
+	 			u4.setAttribute('style', 'width:50px;');
+	 			u4.setAttribute('onerror', "imgError('img_unidad_4')");
+	 			document.getElementById('unidad_4').appendChild(u4);
+ 			}
  			
  	 		var container = document.getElementById('activity-1');
  	 		$('#activity-1').empty();
@@ -556,7 +577,7 @@
  	 	 		div_cell_2.setAttribute('id', 'canvas_container');
  	 	 		
  	 	 		var canvas = document.createElement('div');
- 	 	 		canvas.setAttribute('style', 'width:100%; border:2px solid red;');
+ 	 	 		canvas.setAttribute('style', 'width:100%; border: 2px solid red; border-radius: 5px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075);');
  	 	 		canvas.setAttribute('id', 'canvas_'+index+'/'+tab_count);
  	 	 		
  	 	 		var div_cell_3 = document.createElement('div');

@@ -44,7 +44,22 @@
 				</div>
 			</div>
 		</nav>
-
+		
+		<div id="info" class="row" style="margin-right:20px; margin-left:20px; margin-bottom:20px;">
+			<center style="margin-top:50px;">
+				<h2>GeoPattern</h2>
+				<h5>Versión: 1.0.8</h5>
+				<img src="img/geoPattern_logo.png" style="width:100px;"/>
+				<h4>Autores: Daniel Garcia, Eva Arbona</h4>
+				<img src="img/geoPattern_logo.png" style="width:100px;"/>
+				<img src="img/geoPattern_logo.png" style="width:100px;"/>
+				<img src="img/geoPattern_logo.png" style="width:100px;"/>
+			</center>
+			
+			<div class="row" style="margin-top:50px;"> <center><button class="btn btn-primary" onclick="init_config();"> Empezar </button></center></div>
+			
+		</div>
+		
 		<div id="config" class="row" style="margin-right:20px; margin-left:20px; margin-bottom:20px;">
 			<div class="col-sm-6">
 				<div class="row"></div>
@@ -54,13 +69,14 @@
 				</div>
 				<div class="row"></div>
 				<div class="form-group col-sm-4">
-					<label for="session">Sesión</label>
+					<label for="session">Sesión *</label>
 					<input type="number" class="form-control" id="session">
 				</div>
 				<div class="form-group col-sm-8">
-					<label for="session">Prefijo</label>
+					<label for="session">Prefijo *</label>
 					<input type="text" class="form-control" id="prefix">
 				</div>
+				<div class="row" style="margin-top:100px; margin-left:20px;"><span>Los campos marcados con * son obligatorios</span></div>
 			</div>
 			<div class="col-sm-6">
 				<div class="row" id="activity_list">
@@ -73,10 +89,11 @@
 			<div class="col-sm-6">
 				<div class="row"></div>
 				<div class="form-group col-sm-12">
-					<label for="place">Nombres</label>
+					<label for="place">Nombres *</label>
 					<input type="text" class="form-control" id="names">
 				</div>
-				<div class="row"></div>
+				<div class="row" style="margin-top:100px; margin-left:20px;"><span>Los campos marcados con * son obligatorios</span></div>
+				<div class="row" style="margin-top:50px;"></div>
 			</div>
 		</div>	
 	
@@ -293,6 +310,8 @@
         }
         
         function init(){
+        	$("#config").hide();
+        	$("#btn-config").hide();
         	$("#btn-end").hide();
         	$("#btn-prev").hide();
         	$(".tab-custom").hide();
@@ -301,10 +320,13 @@
         	$("#btn-config_names").hide();
         	$("#config_names").hide();
         	$("#calculator").hide();
-        	init_config();
         }
         
         function init_config(){
+        	
+        	$("#btn-config").show();
+        	$("#info").hide();
+        	$("#config").show();
         	
         	var act_list = document.getElementById("activity_list");
         	
@@ -345,6 +367,10 @@
         
         function set_config(){
         	
+        	if(document.getElementById('session').value == "" || document.getElementById('prefix').value == ""){
+        		return false;
+        	}
+        	
         	var d = new Date();
         	var date = d.getDate() +"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+ d.getFullYear();
         	
@@ -368,6 +394,11 @@
         }
         
         function set_config_names(){
+        	
+        	if(document.getElementById('names').value == ""){
+        		return false;
+        	}
+        	
         	document.getElementById('tag_names').innerHTML += document.getElementById('names').value;
         	$("#config_names").hide();
         	$("#btn-config_names").hide();
@@ -588,7 +619,7 @@
  	 	 		row2.setAttribute('class', 'row');
  	 	 		row2.setAttribute('style', 'padding-right:30px;');
  	 	 		if(json_data.soluciones[sol_char] != ""){
- 	 	 	 		row2.innerHTML = '<div class="col-sm-3"><label style="margin-top:5px;">Resultado:</label></div><div class="col-sm-5"><input type="text" id="solVal_'+sol_count+'" class="form-control" /></div><div class="col-sm-2"><button class="btn btn-success" onclick="validate(this, '+sol_count+');">Comprobar</button></div><br><br>';
+ 	 	 	 		row2.innerHTML = '<div class="col-sm-3"><label style="margin-top:5px;">Resultado:</label></div><div class="col-sm-5"><input type="number" id="solVal_'+sol_count+'" class="form-control" onclick="this.classList.remove(\'val_false\'); this.classList.remove(\'val_true\');" /></div><div class="col-sm-2"><button class="btn btn-success" onclick="validate(this, '+sol_count+');">Comprobar</button></div><br><br>';
  	 	 		}
  	 	 		else{
  	 	 			row2.innerHTML = '';

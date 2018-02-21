@@ -345,8 +345,6 @@
         
         function set_config(){
         	
-        	debug('set_config');
-        	
         	var d = new Date();
         	var date = d.getDate() +"/"+parseInt(parseInt(d.getMonth())+parseInt(1))+"/"+ d.getFullYear();
         	
@@ -440,7 +438,6 @@
         }
         
         function next_activity(){
-        	debug('next');
         	
         	if(activity_index != -1){
         		var d = new Date();
@@ -468,8 +465,6 @@
         }
         
  		function change_activity(index){ 
- 			
- 			debug("change_act");
  			
  			document.getElementById('patron').src = json_data.ruta_patron;
  			
